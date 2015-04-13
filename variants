@@ -1,0 +1,56 @@
+#title           :variants.py
+#description     :This will initiate and update variants.
+#author          :gb
+#date            :04/07/2015
+#version         :0.1
+#notes           : 
+#python_version  :2.7.8
+#==============================================================================
+
+# Import the modules needed to run the script.
+from random import randint, random
+import numpy
+import math
+import string
+
+#Get a list of the alphabet, which represent the variants.
+letters = list(string.ascii_lowercase)
+
+#Number of variants.
+num_v = 8
+
+#Select the variants needed.
+v = letters[:num_v]
+
+#Uniformly randomly choose a variant from v for all nodes.
+variants = [choice(v) for i in range(n)]
+
+#Update a node's variants with that of another.
+def update():
+    x = choose_2()
+    variants[x[0]] = variants[x[1]]
+
+
+#Run the model for t steps.
+def run_model_1(t):
+    before = show_variants()
+    for i in range(t):
+        update()
+    after = show_variants()
+    #return (before, after)
+    
+#Print the variants.    
+def show_variants():  
+    for i in variants:
+        print i,
+    print "\n"
+    
+#Run the model with q variants and t steps.
+#def run_model_2(q,r):
+#    num_v = q
+#    v = letters[:num_v]
+#    variants = [choice(v) for i in range(n)]
+#    run_model_1(r)
+    
+
+    
