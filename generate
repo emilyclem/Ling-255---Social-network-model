@@ -1,0 +1,88 @@
+#title           :generate.py
+#description     :This will generate a sociomatrix.
+#author          :gb
+#date            :04/10/2015
+#version         :0.1
+#notes           : 
+#python_version  :2.7.8
+#bugs to fix     : 1. Generate function prints blank matrix. 2. There is a better way to prevent reflexive nodes.
+#==============================================================================
+
+# Import the modules needed to run the script.
+from random import randint, random
+import numpy
+import math
+
+n = 64
+
+l = 200
+
+#Create an n X n matrix of 0's.
+matrix = [[0 for i in range(n)] for j in range(n)] 
+
+#Create an n X n matrix of indices.
+indices = [[(j,i) for i in range(n)] for j in range(n)] 
+
+#Reflexive edges are bad.
+reflexives = [(i,i) for i in range(n)]
+
+#Run after change().
+#for i in reflexives:
+#    matrix[i[0]][i[1]] = 0
+
+
+
+#Add an edge.    
+def change():
+        dice_roll = numpy.random.choice([1,2,3,4],math.log(n,2), p = [0.5,0.1,0.1,0.3])
+        dice_roll = list(dice_roll)
+        cell = pick(indices,dice_roll)
+        matrix[cell[0]][cell[1]] = 1
+        
+#Pick a cell of a matrix
+def pick(a,b):
+        for i in b:
+                a = quad(a,i)
+        return a[0][0]
+
+#Find a quadrant of a matrix
+def quad(x,y):
+        height = len(x)
+        width = len(x[1])
+        top_left =  [x[i][:height / 2] for i in range(width / 2)]
+        top_right = [x[i][height / 2:] for i in range(width / 2)]
+        bot_left =  [x[i][:height / 2] for i in range(width / 2, width)]
+        bot_right = [x[i][height / 2:] for i in range(width / 2, width)]
+
+        if y == 1:
+                return top_left
+        elif y == 2:
+                return top_right
+        elif y == 3:
+                return bot_left
+        elif y == 4:
+                return bot_right
+                
+                
+#The pick function needs to forbid reflexive edges.
+#def pick2(a,b):
+#        for i in b:
+#            a = quad(a,i)
+#        if a[0][0][0] != a[0][0][1]:
+#            return a[0][0]
+#        else:
+#            return pick2(a,b)
+                
+
+##Generate a sociomatrix of n nodes and l edges.
+#def generate(n,l):
+#    #Create an n X n matrix of 0's.
+#    matrix = [[0 for i in range(n)] for j in range(n)] 
+#    #Create an n X n matrix of indices.
+#    indices = [[(j,i) for i in range(n)] for j in range(n)] 
+#    for i in range(l):
+#        change()       
+#    for i in matrix:
+#        print i
+        
+
