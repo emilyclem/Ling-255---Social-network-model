@@ -1,3 +1,7 @@
+#Generates a recursive matrix 
+#GenRMat(nodes, edges, a, b, c, Rnd)
+#a,b,c = probabilities that quadrant will be chosen
+
 import snap
 
 Rnd = snap.TRnd()
